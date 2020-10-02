@@ -7,10 +7,13 @@ import (
 )
 
 type Responce struct {
-	time string
+	Time string `json:"time"`
 }
 
 func main() {
+	m := Responce{"Alice"}
+	b, err := json.Marshal(m)
+	fmt.Println(string(b), err)
 
 	http.HandleFunc("/time", func(w http.ResponseWriter, r *http.Request) {
 		m := Responce{"Alice"}
