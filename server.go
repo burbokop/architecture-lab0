@@ -12,8 +12,6 @@ type Responce struct {
 }
 
 func main() {
-	fmt.Fprintf(w, "%s", "gogadoda")
-
 	http.HandleFunc("/time", func(w http.ResponseWriter, r *http.Request) {
 		b, err := json.Marshal(Responce{time.Now().Format(time.RFC3339)})
 		if err == nil {
