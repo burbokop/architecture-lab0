@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"time"
 )
 
 type Responce struct {
@@ -11,15 +12,13 @@ type Responce struct {
 }
 
 func main() {
-	m := Responce{"Alice"}
-	b, err := json.Marshal(m)
-	fmt.Println(string(b), err)
-
 	http.HandleFunc("/time", func(w http.ResponseWriter, r *http.Request) {
-		m := Responce{"Alice"}
-		b, err := json.Marshal(m)
-		fmt.Println(string(b))
-		fmt.Fprintf(w, "Hello World! time %s %s %s", b, string(b), err)
+		b, err := json.Marshal(Responce{time.Now().Format(time.RFC3339)})
+		if err == nil {
+			fmt.Fprintf(w, "%s", string(b))
+		} else {
+			fmt.Fprintf(w, "%s", err)
+		}
 	})
 	http.ListenAndServe(":4444", nil)
 }
